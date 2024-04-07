@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1712498285039,
+      "tag": "0000_outstanding_ted_forrester",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1712500124120,
+      "tag": "0001_clumsy_chamber",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1712500247875,
+      "tag": "0002_wooden_magus",
+      "breakpoints": true
+    }
+  ]
+}
