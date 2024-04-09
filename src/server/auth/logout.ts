@@ -3,7 +3,7 @@
 import { cookies } from "next/headers"
 
 const logout = async () => {
-  cookies().set("session", "", { expires: new Date(0) });
+  cookies().delete("session");
 }
 
 export default logout;

@@ -18,7 +18,6 @@ export function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [isPending, startTransition] = useTransition();
 
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
