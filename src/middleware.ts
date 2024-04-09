@@ -7,14 +7,18 @@ import { EnumCookie, EnumPagePath } from './types/enum';
 export function middleware(request: NextRequest) {
   const token = cookies().get(EnumCookie.SESSION); 
 
-  if (request.nextUrl.pathname === '/') {
-    if (token) {
-      return NextResponse.redirect(new URL(EnumPagePath.HOME, request.url))
-    }
-  }
+  switch (request.nextUrl.pathname) {
+    case EnumPagePath.LOGIN:
+    case EnumPagePath.REGISTER:
+      if (token) {
+        return NextResponse.redirect(new URL(EnumPagePath.HOME, request.url));
+      }
+      break;
 
-  if (request.nextUrl.pathname !== "/" && !token) {
-    return NextResponse.redirect(new URL(EnumPagePath.LOGIN, request.url))
+    default:
+      if (!token) {
+        return NextResponse.redirect(new URL(EnumPagePath.LOGIN, request.url));
+      }
   }
 }
  

@@ -3,7 +3,8 @@ export enum EnumPagePath {
   NOTIFICATION = "/notification",
   MESSAGES = "/messages",
 
-  LOGIN = "/"
+  LOGIN = "/",
+  REGISTER = "/register"
 }
 
 export enum EnumCookie {
