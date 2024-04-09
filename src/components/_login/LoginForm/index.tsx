@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label"
 import { login } from "@/server/auth"
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
+import { loginFormSchema } from "@/data-schemas";
 
 export function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -23,15 +24,19 @@ export function LoginForm() {
 
     startTransition(async () => {
       const formData = new FormData(event.target as HTMLFormElement);
-      const username = formData.get("username") as string;
-      const password = formData.get("password") as string;
+      const username = formData.get("username");
+      const password = formData.get("password");
 
-      if (!username || !password) {
+      const validationResult = loginFormSchema.safeParse({ username, password });
+      if (!validationResult.success) {
         setErrorMessage("Please enter both username and password");
         return;
       }
 
-      const result = await login(username, password);
+      const result = await login(
+        validationResult.data.username,
+        validationResult.data.password
+      );
 
       if (result?.message) {
         setErrorMessage(result.message);
@@ -51,7 +56,11 @@ export function LoginForm() {
       <form onSubmit={handleSubmit}>
         <CardContent className="grid gap-4 pt-4">
           {errorMessage && (
-            <div className="text-red-500">
+            <div className="
+              bg-red-500 text-white
+              font-semibold text-xs
+              px-2 py-1 rounded-sm
+            ">
               {errorMessage}
             </div>
           )}

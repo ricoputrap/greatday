@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import UserMenu from "@/components/_navbar/UserMenu";
 
 export const metadata: Metadata = {

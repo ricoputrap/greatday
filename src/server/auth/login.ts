@@ -21,7 +21,11 @@ const login = async (username: string, password: string) => {
     }
 
     // check password
-    if (!await bcrypt.compare(password, user.password)) return null;
+    if (!await bcrypt.compare(password, user.password)) {
+      return {
+        message: "Invalid password"
+      }
+    }
 
     // set expires in 10 minutes
     const expires = new Date(Date.now() * 10 * 1000);
@@ -47,7 +51,7 @@ const login = async (username: string, password: string) => {
   }
   catch (error) {
     return {
-      message: "Invalid username or password"
+      message: "Login is failed"
     }
   }
 
