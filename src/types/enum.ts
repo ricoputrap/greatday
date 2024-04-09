@@ -1,5 +1,11 @@
 export enum EnumPagePath {
-  HOME = "/",
+  HOME = "/home",
   NOTIFICATION = "/notification",
   MESSAGES = "/messages",
+
+  LOGIN = "/"
+}
+
+export enum EnumCookie {
+  SESSION = "session"
 }

@@ -4,14 +4,18 @@ import bcrypt from "bcryptjs";
 
 import { IUser } from "@/types/user.types";
 import UserService from "../user/user-service";
-import { handleError } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { encrypt } from "./utils";
+import { redirect } from "next/navigation";
+import { EnumPagePath } from "@/types/enum";
 
 const userService = new UserService();
 
-const login = async (username: string, password: string) => {
-  try {
+const login = async (formData: FormData) => {
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
+    if (!username || !password) return null;
+
     const user: IUser | undefined = await userService.getByUsername(username);
     if (!user) {
       throw new Error("User not found");
@@ -41,10 +45,8 @@ const login = async (username: string, password: string) => {
       httpOnly: true,
       expires
     })
-  }
-  catch (error) {
-    handleError(error);
-  }
+
+    redirect(EnumPagePath.HOME);
 }
 
 export default login;
