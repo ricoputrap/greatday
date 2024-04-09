@@ -11,37 +11,38 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { login } from "@/server/auth"
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { loginFormSchema } from "@/data-schemas";
 
 export function LoginForm() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
-  const [isPending, startTransition] = useTransition();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
 
-    startTransition(async () => {
-      const formData = new FormData(event.target as HTMLFormElement);
-      const username = formData.get("username");
-      const password = formData.get("password");
+    const formData = new FormData(event.target as HTMLFormElement);
+    const username = formData.get("username");
+    const password = formData.get("password");
 
-      const validationResult = loginFormSchema.safeParse({ username, password });
-      if (!validationResult.success) {
-        setErrorMessage("Please enter both username and password");
-        return;
-      }
+    const validationResult = loginFormSchema.safeParse({ username, password });
+    if (!validationResult.success) {
+      setErrorMessage("Please enter both username and password");
+      setIsLoading(false);
+      return;
+    }
 
-      const result = await login(
-        validationResult.data.username,
-        validationResult.data.password
-      );
+    const result = await login(
+      validationResult.data.username,
+      validationResult.data.password
+    );
 
-      if (result?.message) {
-        setErrorMessage(result.message);
-      }
-    })
+    if (result?.message) {
+      setErrorMessage(result.message);
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -79,9 +80,9 @@ export function LoginForm() {
           <Button
             className="w-full"
             type="submit"
-            disabled={isPending}
+            disabled={isLoading}
           >
-            { isPending ? "..." : "Login" }
+            { isLoading ? "..." : "Login" }
           </Button>
         </CardFooter>
       </form>
