@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { getPosts } from '@/server/post'
+import { getPosts } from '@/server/post';
 import { IPost } from '@/types/post.types'
 import React from 'react'
 

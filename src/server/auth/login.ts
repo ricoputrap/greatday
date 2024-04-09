@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { encrypt } from "./utils";
 import { redirect } from "next/navigation";
 import { EnumPagePath } from "@/types/enum";
+import { ISessionPayload } from "@/types/session.types";
 
 const userService = new UserService();
 
@@ -30,7 +31,7 @@ const login = async (username: string, password: string) => {
     // set expires in 10 minutes
     const expires = new Date(Date.now() * 10 * 1000);
 
-    const payload = {
+    const payload: ISessionPayload = {
       user: {
         id: user.id,
         fullname: user.fullname,

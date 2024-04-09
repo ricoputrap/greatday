@@ -3,15 +3,17 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { decrypt, encrypt } from "./utils";
+import { EnumCookie } from "@/types/enum";
+import { ISessionPayload } from "@/types/session.types";
 
-export const getSession = async () => {
+export const getSession = () => {
   const session = cookies().get("session")?.value;
   if (!session) return null;
   return 
 }
 
 export const updateSession = async (request: NextRequest) => {
-  const session = cookies().get("session")?.value;
+  const session = request.cookies.get(EnumCookie.SESSION)?.value;
   if (!session) return;
 
   // Refresh the session so it doesn't expire
@@ -20,7 +22,7 @@ export const updateSession = async (request: NextRequest) => {
 
   const expires = new Date(Date.now() * 10 * 1000);
   const payload = {
-    user: parsed.user,
+    user: (parsed as ISessionPayload).user,
     expires
   };
 

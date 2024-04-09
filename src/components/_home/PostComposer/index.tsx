@@ -14,7 +14,7 @@ const PostComposer: React.FC = () => {
     setContent(event.target.value);
   }
 
-  const handleSubmit = async () => {    
+  const handleSubmit = async () => {
     if (content) {
       await createPost({ content });
       setContent("");

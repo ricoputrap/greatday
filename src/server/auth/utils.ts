@@ -1,4 +1,6 @@
-import { handleError } from "@/lib/utils";
+"use server"
+
+import { ISessionPayload, ISessionUser } from "@/types/session.types";
 import { SignJWT, jwtVerify } from "jose";
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
@@ -12,15 +14,20 @@ export const encrypt = async (payload: any) => {
     .sign(key);
 }
 
-export const decrypt = async (token: string) => {
+export const decrypt = async (token: string): Promise<ISessionPayload | string> => {
   try {
     const { payload } = await jwtVerify(token, key, {
       algorithms: ["HS256"],
     });
-    return payload;
+
+    const sessionPayload: ISessionPayload = {
+      expires: payload.expires as Date,
+      user: payload.user as ISessionUser
+    }
+
+    return sessionPayload
   }
   catch (error) {
-    handleError(error);
-    return null;
+    return "Invalid token";
   }
 }

@@ -7,4 +7,5 @@ export interface IPost {
 
 export interface ICreatePostParams {
   content: string;
+  user_id: number;
 }
