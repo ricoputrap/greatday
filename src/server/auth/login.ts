@@ -11,14 +11,13 @@ import { EnumPagePath } from "@/types/enum";
 
 const userService = new UserService();
 
-const login = async (formData: FormData) => {
-    const username = formData.get("username") as string;
-    const password = formData.get("password") as string;
-    if (!username || !password) return null;
-
+const login = async (username: string, password: string) => {
+  try {
     const user: IUser | undefined = await userService.getByUsername(username);
     if (!user) {
-      throw new Error("User not found");
+      return {
+        message: "User not found"
+      }
     }
 
     // check password
@@ -45,8 +44,14 @@ const login = async (formData: FormData) => {
       httpOnly: true,
       expires
     })
+  }
+  catch (error) {
+    return {
+      message: "Invalid username or password"
+    }
+  }
 
-    redirect(EnumPagePath.HOME);
+  redirect(EnumPagePath.HOME);
 }
 
 export default login;

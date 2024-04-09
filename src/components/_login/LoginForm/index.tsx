@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button"
+"use client";
+
 import {
   Card,
   CardContent,
@@ -10,8 +11,34 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { login } from "@/server/auth"
+import { useState, useTransition } from "react";
+import { Button } from "@/components/ui/button";
 
 export function LoginForm() {
+  const [errorMessage, setErrorMessage] = useState<string>();
+  const [isPending, startTransition] = useTransition();
+
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    startTransition(async () => {
+      const formData = new FormData(event.target as HTMLFormElement);
+      const username = formData.get("username") as string;
+      const password = formData.get("password") as string;
+
+      if (!username || !password) {
+        setErrorMessage("Please enter both username and password");
+        return;
+      }
+
+      const result = await login(username, password);
+
+      if (result?.message) {
+        setErrorMessage(result.message);
+      }
+    })
+  }
 
   return (
     <Card className="w-full max-w-sm">
@@ -22,8 +49,14 @@ export function LoginForm() {
         </CardDescription>
       </CardHeader>
 
-      <form action={login}>
+      <form onSubmit={handleSubmit}>
         <CardContent className="grid gap-4 pt-4">
+          {errorMessage && (
+            <div className="text-red-500">
+              {errorMessage}
+            </div>
+          )}
+
           <div className="grid gap-2">
             <Label htmlFor="username">Username</Label>
             <Input id="username" name="username" type="text" required />
@@ -35,7 +68,13 @@ export function LoginForm() {
         </CardContent>
 
         <CardFooter>
-          <Button className="w-full" type="submit">Login</Button>
+          <Button
+            className="w-full"
+            type="submit"
+            disabled={isPending}
+          >
+            { isPending ? "..." : "Login" }
+          </Button>
         </CardFooter>
       </form>
     </Card>
