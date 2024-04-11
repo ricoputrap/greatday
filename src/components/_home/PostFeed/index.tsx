@@ -1,4 +1,4 @@
-import PostItem from '@/components/PostItem';
+import PostItem from '@/components/_home/PostItem';
 import { getPosts } from '@/server/post';
 import { IPost } from '@/types/post.types'
 import React from 'react'

@@ -20,7 +20,10 @@ export default function Layout({
       <header className={cn(
         "h-14 w-screen mb-5",
         "flex justify-center items-center gap-5",
-        "border-b-2 border-foreground"
+        "border-b-2 border-foreground",
+        "bg-background",
+        "fixed",
+        "z-10"
       )}>
         {/* Left: Logo */}
         <div className="w-64 flex items-center gap-2">
@@ -47,8 +50,8 @@ export default function Layout({
         </div>
       </header>
 
-      <div className="flex justify-center gap-5">
-        <aside className='w-64'>
+      <div className="flex justify-center gap-5 pt-20">
+        <aside className='w-64 '>
           {/* My Profile Summary */}
 
           {/* Nav Menu */}
@@ -64,7 +67,7 @@ export default function Layout({
         </aside>
 
         {/* Center: Feed & Post Composer */}
-        <main className="w-[600px]">
+        <main className="w-[600px] h-screen overflow-scroll no-scrollbar">
           {children}
           
         </main>

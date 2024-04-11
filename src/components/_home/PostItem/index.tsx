@@ -1,8 +1,9 @@
 import React from 'react'
-import { Card, CardContent } from '../ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Button } from '../ui/button'
+import { Card, CardContent } from '../../ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
+import { Button } from '../../ui/button'
 import { MessageSquare, Repeat2, ThumbsUp } from 'lucide-react'
+import Actions from './Actions'
 
 const PostItem: React.FC = () => {
   return (
@@ -44,20 +45,9 @@ const PostItem: React.FC = () => {
         </div>
 
         {/* actions */}
-        <div className="flex justify-evenly">
-          <Button variant="outline" className="flex gap-2 items-center">
-            <ThumbsUp size="20" />
-            Liked
-          </Button>
-          <Button variant="outline" className="flex gap-2 items-center">
-            <MessageSquare size="20" />
-            Comment
-          </Button>
-          <Button variant="outline" className="flex gap-2 items-center">
-            <Repeat2 size="20" />
-            Share
-          </Button>
-        </div>
+        <Actions
+          postId={9}
+        />
       </CardContent>
     </Card>
   )
