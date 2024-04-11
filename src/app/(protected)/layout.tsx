@@ -64,7 +64,7 @@ export default function Layout({
         </aside>
 
         {/* Center: Feed & Post Composer */}
-        <main className="min-w-[600px]">
+        <main className="w-[600px]">
           {children}
           
         </main>
